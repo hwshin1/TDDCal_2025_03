@@ -5,8 +5,13 @@ import java.util.stream.Collectors;
 
 public class Calc {
     public static int run(String exp) {
-        // 괄호 제거 메서드
-        exp = stripOuterBrackets(exp);
+        boolean par = exp.contains("(");
+
+        if (par) {
+            // 괄호 제거 메서드
+            exp = stripOuterBrackets(exp);
+            return run(exp);
+        }
 
         // 단일항이 들어오면 바로 리턴
         if (!exp.contains(" ")) {
