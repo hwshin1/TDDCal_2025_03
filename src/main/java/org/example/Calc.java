@@ -15,9 +15,14 @@ public class Calc {
 
         int a = Integer.parseInt(bits[0]);
         int b = Integer.parseInt(bits[1]);
+        int c = 0;
+
+        if (bits.length > 2) {
+            c = Integer.parseInt(bits[2]);
+        }
 
         if (plus) {
-            return a + b;
+            return a + b + c;
         } else if (minus) {
             return a - b;
         }
