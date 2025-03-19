@@ -5,6 +5,13 @@ import java.util.stream.Collectors;
 
 public class Calc {
     public static int run(String exp) {
+        // 괄호 제거 메서드
+        exp = stripOuterBrackets(exp);
+
+        // 단일항이 들어오면 바로 리턴
+        if (!exp.contains(" ")) {
+            return Integer.parseInt(exp);
+        }
         System.out.println("exp1: " + exp);
         boolean multi = exp.contains("*");
         boolean plus = exp.contains("+");
@@ -44,5 +51,12 @@ public class Calc {
             return sum;
         }
 //        throw new RuntimeException("올바른 계산식이 아닙니다.");
+    }
+
+    static String stripOuterBrackets(String e) {
+        if (e.charAt(0) == '(' && e.charAt(e.length() - 1) == ')') {
+            return e.substring(1, e.length() - 1);
+        }
+        return e;
     }
 }
