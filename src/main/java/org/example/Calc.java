@@ -13,7 +13,19 @@ public class Calc {
         if (needToCompound) {
             bits = exp.split(" \\+ ");
 
-            return Integer.parseInt(bits[0]) + run(bits[1]);
+            int sum = 0;
+            for (int i = 0; i < bits.length; i++) {
+                int a = 0;
+                int b = 0;
+                if (bits[i].contains("*")) {
+                    a = run(bits[i]);
+                } else {
+                    b = Integer.parseInt(bits[i]);
+                }
+                sum += a + b;
+            }
+
+            return sum;
         } else if (multi) {
             bits = exp.split(" \\* ");
 
