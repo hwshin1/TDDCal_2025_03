@@ -5,13 +5,7 @@ import java.util.stream.Collectors;
 
 public class Calc {
     public static int run(String exp) {
-        boolean par = exp.contains("(");
-
-        if (par) {
-            // 괄호 제거 메서드
-            exp = stripOuterBrackets(exp);
-            return run(exp);
-        }
+        exp = stripOuterBrackets(exp);
 
         // 단일항이 들어오면 바로 리턴
         if (!exp.contains(" ")) {
@@ -58,10 +52,15 @@ public class Calc {
 //        throw new RuntimeException("올바른 계산식이 아닙니다.");
     }
 
-    static String stripOuterBrackets(String e) {
-        if (e.charAt(0) == '(' && e.charAt(e.length() - 1) == ')') {
-            return e.substring(1, e.length() - 1);
+    static String stripOuterBrackets(String exp) {
+        int outerBracketsCount = 0;
+
+        while (exp.charAt(outerBracketsCount) == '(' && exp.charAt(exp.length() - 1 - outerBracketsCount) == ')') {
+            outerBracketsCount++;
         }
-        return e;
+
+        if (outerBracketsCount == 0) return exp;
+
+        return exp.substring(outerBracketsCount, exp.length() - outerBracketsCount);
     }
 }
