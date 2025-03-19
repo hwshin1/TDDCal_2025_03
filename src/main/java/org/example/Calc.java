@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Calc {
     public static int run(String exp) {
         System.out.println("exp1: " + exp);
@@ -13,19 +16,12 @@ public class Calc {
         if (needToCompound) {
             bits = exp.split(" \\+ ");
 
-            int sum = 0;
-            for (int i = 0; i < bits.length; i++) {
-                int a = 0;
-                int b = 0;
-                if (bits[i].contains("*")) {
-                    a = run(bits[i]);
-                } else {
-                    b = Integer.parseInt(bits[i]);
-                }
-                sum += a + b;
-            }
+            String newExp = Arrays.stream(bits)
+                    .mapToInt(Calc::run)
+                    .mapToObj(e -> e + "")
+                    .collect(Collectors.joining(" + "));
 
-            return sum;
+            return run(newExp);
         } else if (multi) {
             bits = exp.split(" \\* ");
 
