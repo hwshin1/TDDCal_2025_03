@@ -29,4 +29,22 @@ public class CalcTest {
     public void test4() {
         assertThat(Calc.run("1000 + 200")).isEqualTo(1200);
     }
+
+    @Test
+    @DisplayName("2 - 1 == 1")
+    public void test5() {
+        assertThat(Calc.run("2 - 1")).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("50 - 20 == 30")
+    public void test6() {
+        assertThat(Calc.run("50 - 20")).isEqualTo(30);
+    }
+
+    @Test
+    @DisplayName("7 - 4 == 3")
+    public void test7() {
+        assertThat(Calc.run("7 - 4")).isEqualTo(3);
+    }
 }
