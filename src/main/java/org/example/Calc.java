@@ -13,16 +13,20 @@ public class Calc {
             bits = exp.split(" - ");
         }
 
-        int a = Integer.parseInt(bits[0]);
-        int b = Integer.parseInt(bits[1]);
-        int c = 0;
+        int a = 0;
+        int b = 0;
+        if (bits.length <= 2) {
+            a = Integer.parseInt(bits[0]);
+            b = Integer.parseInt(bits[1]);
+        }
 
-        if (bits.length > 2) {
-            c = Integer.parseInt(bits[2]);
+        int sum = 0;
+        for (int i = 0; i < bits.length; i++) {
+            sum += Integer.parseInt(bits[i]);
         }
 
         if (plus) {
-            return a + b + c;
+            return sum;
         } else if (minus) {
             return a - b;
         }
