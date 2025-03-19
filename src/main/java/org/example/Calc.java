@@ -2,35 +2,23 @@ package org.example;
 
 public class Calc {
     public static int run(String exp) {
-        boolean plus = exp.contains("+");
-        boolean minus = exp.contains("-");
+        System.out.println("exp1: " + exp);
+        exp = exp.replace("- ", "+ -");
 
-        String[] bits = null;
+        System.out.println("exp2: " + exp);
 
-        if (plus) {
-            bits = exp.split(" \\+ ");
-        } else if (minus) {
-            bits = exp.split(" - ");
+        String[] bits = exp.split(" \\+ ");
+
+        int a = Integer.parseInt(bits[0]);
+        int b = Integer.parseInt(bits[1]);
+        int c = 0;
+
+        if (bits.length > 2) {
+            c = Integer.parseInt(bits[2]);
         }
 
-        int a = 0;
-        int b = 0;
-        if (bits.length <= 2) {
-            a = Integer.parseInt(bits[0]);
-            b = Integer.parseInt(bits[1]);
-        }
+        return a + b + c;
 
-        int sum = 0;
-        for (int i = 0; i < bits.length; i++) {
-            sum += Integer.parseInt(bits[i]);
-        }
-
-        if (plus) {
-            return sum;
-        } else if (minus) {
-            return a - b;
-        }
-
-        throw new RuntimeException("올바른 계산식이 아닙니다.");
+//        throw new RuntimeException("올바른 계산식이 아닙니다.");
     }
 }
