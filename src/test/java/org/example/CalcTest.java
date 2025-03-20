@@ -125,4 +125,16 @@ public class CalcTest {
     public void test20() {
         assertThat(Calc.run("((20 + 20)) + 20")).isEqualTo(60);
     }
+
+    @Test
+    @DisplayName("(20 + 20) * 20 == 800")
+    public void test21() {
+        assertThat(Calc.run("(20 + 20) * 20")).isEqualTo(800);
+    }
+
+    @Test
+    @DisplayName("(10 + 20) * 3 == 90")
+    public void test22() {
+        assertThat(Calc.run("(10 + 20) * 3")).isEqualTo(90);
+    }
 }
