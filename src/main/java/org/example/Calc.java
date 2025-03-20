@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 public class Calc {
     public static int run(String exp) {
+        exp = exp.trim();
         // 괄호 제거 메서드
         exp = stripOuterBrackets(exp);
 
@@ -19,24 +20,12 @@ public class Calc {
         boolean needToCompound = multi && plus;
 
         if (needToSplit) {
-            int bracketsCount = 0;
-            int splitPointIndex = -1;
+            int splitPointIndex = findSplitPointIndex(exp);
 
-            for (int i = 0; i < exp.length(); i++) {
-                if (exp.charAt(i) == '(') {
-                    bracketsCount++;
-                } else if (exp.charAt(i) == ')') {
-                    bracketsCount--;
-                }
-                if (bracketsCount == 0) {
-                    splitPointIndex = i;
-                    break;
-                }
-            }
-            String firstPart = exp.substring(0, splitPointIndex + 1);
-            String secondPart = exp.substring(splitPointIndex + 4);
+            String firstPart = exp.substring(0, splitPointIndex);
+            String secondPart = exp.substring(splitPointIndex + 1);
 
-            char operator = exp.charAt(splitPointIndex + 2);
+            char operator = exp.charAt(splitPointIndex);
             exp = Calc.run(firstPart) + " " + operator + " " + Calc.run(secondPart);
             return Calc.run(exp);
         } else if (needToCompound) {
@@ -83,5 +72,31 @@ public class Calc {
         }
 
         return e.substring(count, e.length() - count);
+    }
+
+    static int findSplitPointIndex(String exp) {
+        int index = findSplitPointByIndex(exp, '+');
+
+        if (index >= 0) {
+            return index;
+        }
+        return findSplitPointByIndex(exp, '*');
+    }
+
+    static int findSplitPointByIndex(String exp, char findChar) {
+        int bracketsCount = 0;
+
+        for (int i = 0; i < exp.length(); i++) {
+            char c = exp.charAt(i);
+
+            if (c == '(') {
+                bracketsCount++;
+            } else if (c == ')') {
+                bracketsCount--;
+            } else if (c == findChar) {
+                if (bracketsCount == 0) return i;
+            }
+        }
+        return -1;
     }
 }
