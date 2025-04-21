@@ -14,6 +14,12 @@ public class Calc {
         // 괄호 제거 메서드
         exp = stripOuterBrackets(exp);
 
+        // -( 패턴이라면 해석 가능하게
+        if (isCaseMinusBracket(exp)) {
+            // () * -1 이런식으로 바꾼다.
+            exp = exp.substring(1) + " * -1";
+        }
+
         // 디버그
         if (debug) {
             System.out.printf("exp(%d): %s\n", runCallCount, exp);
@@ -71,7 +77,7 @@ public class Calc {
 //        throw new RuntimeException("올바른 계산식이 아닙니다.");
     }
 
-    static String stripOuterBrackets(String e) {
+    private static String stripOuterBrackets(String e) {
         int count = 0;
         while (e.charAt(count) == '(' && e.charAt(e.length() - 1 - count) == ')') {
             count++;
@@ -84,7 +90,7 @@ public class Calc {
         return e.substring(count, e.length() - count);
     }
 
-    static int findSplitPointIndex(String exp) {
+    private static int findSplitPointIndex(String exp) {
         int index = findSplitPointByIndex(exp, '+');
 
         if (index >= 0) {
@@ -93,7 +99,7 @@ public class Calc {
         return findSplitPointByIndex(exp, '*');
     }
 
-    static int findSplitPointByIndex(String exp, char findChar) {
+    private static int findSplitPointByIndex(String exp, char findChar) {
         int bracketsCount = 0;
 
         for (int i = 0; i < exp.length(); i++) {
@@ -108,5 +114,31 @@ public class Calc {
             }
         }
         return -1;
+    }
+
+    private static boolean isCaseMinusBracket(String exp) {
+        if (!exp.startsWith("-(")) {
+            return false;
+        }
+
+        int bracketsCount = 0;
+
+        for (int i = 0; i < exp.length(); i++) {
+            char c = exp.charAt(i);
+
+            if (c == '(') {
+                bracketsCount++;
+            } else if (c == ')') {
+                bracketsCount--;
+            }
+
+            if (bracketsCount == 0) {
+                if (exp.length() - 1 == i) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
