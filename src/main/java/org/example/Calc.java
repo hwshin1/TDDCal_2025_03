@@ -4,10 +4,20 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Calc {
+    public static boolean debug = true;
+    public static int runCallCount = 0;
+
     public static int run(String exp) {
+        runCallCount++;
+
         exp = exp.trim();
         // 괄호 제거 메서드
         exp = stripOuterBrackets(exp);
+
+        // 디버그
+        if (debug) {
+            System.out.printf("exp(%d): %s\n", runCallCount, exp);
+        }
 
         // 단일항이 들어오면 바로 리턴
         if (!exp.contains(" ")) {
